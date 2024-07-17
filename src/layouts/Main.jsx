@@ -1,7 +1,20 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
+import { useAuth } from "../providers/AuthProvider";
 
 const Main = () => {
+  const { loading, error } = useAuth();
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <span className="loading loading-spinner loading-lg text-info"></span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
   return (
     <div className="relative min-h-screen md:flex">
       {/* Sidebar */}

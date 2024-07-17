@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GrLogout } from "react-icons/gr";
 import { FaRegUser, FaUsers } from "react-icons/fa";
 import { FaHistory } from "react-icons/fa";
@@ -8,14 +8,21 @@ import { IoIosSend } from "react-icons/io";
 import MenuItem from "./MenuItem";
 import { GiPayMoney } from "react-icons/gi";
 import { GiTakeMyMoney } from "react-icons/gi";
+import { useAuth } from "../providers/AuthProvider";
 
 const Sidebar = () => {
-  const role = "admin";
+  const { userInfo } = useAuth();
   const [isActive, setActive] = useState(false);
+  const navigate = useNavigate();
 
   // Sidebar Responsive Handler
   const handleToggle = () => {
     setActive(!isActive);
+  };
+
+  const logout = () => {
+    localStorage.clear("token");
+    navigate("/login");
   };
 
   return (
@@ -63,13 +70,9 @@ const Sidebar = () => {
           <div className="flex mt-5 flex-col justify-between flex-1 ">
             {/*  Menu Items */}
             <nav>
-              {role === "user" && (
+              {userInfo?.role === "user" && (
                 <>
-                  <MenuItem
-                    label="My Profile"
-                    address="/dashboard"
-                    icon={FaRegUser}
-                  />
+                  <MenuItem label="My Profile" address="/" icon={FaRegUser} />
                   <MenuItem
                     label="Send Money"
                     address="/sendMoney"
@@ -92,13 +95,9 @@ const Sidebar = () => {
                   />
                 </>
               )}
-              {role === "agent" && (
+              {userInfo?.role === "agent" && (
                 <>
-                  <MenuItem
-                    label="My Profile"
-                    address="/dashboard"
-                    icon={FaRegUser}
-                  />
+                  <MenuItem label="My Profile" address="/" icon={FaRegUser} />
                   <MenuItem
                     label="Cash-Out Request"
                     address="/cashOut"
@@ -116,7 +115,7 @@ const Sidebar = () => {
                   />
                 </>
               )}
-              {role === "admin" && (
+              {userInfo?.role === "admin" && (
                 <>
                   <MenuItem
                     label="Manage Users"
@@ -139,7 +138,10 @@ const Sidebar = () => {
 
           {/* Profile Menu */}
 
-          <button className="flex w-full items-center px-4 py-2  text-gray-600 mt-2 hover:bg-sky-500   hover:text-white transition-colors duration-300 transform">
+          <button
+            onClick={logout}
+            className="flex w-full items-center px-4 py-2  text-gray-600 mt-2 hover:bg-sky-500   hover:text-white transition-colors duration-300 transform"
+          >
             <GrLogout className="w-5 h-5" />
 
             <span className="mx-4 font-medium">Logout</span>
