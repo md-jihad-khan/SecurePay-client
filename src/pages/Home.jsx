@@ -8,6 +8,7 @@ const Home = () => {
   if (!token) {
     window.location.href = "/login";
   }
+
   useEffect(() => {
     refresh();
   }, []);

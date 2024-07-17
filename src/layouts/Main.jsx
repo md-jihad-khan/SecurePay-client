@@ -1,9 +1,10 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import { useAuth } from "../providers/AuthProvider";
 
 const Main = () => {
   const { loading, error } = useAuth();
+  const navigate = useNavigate();
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -13,6 +14,7 @@ const Main = () => {
   }
 
   if (error) {
+    navigate("/login");
     return <div>Error: {error}</div>;
   }
   return (
