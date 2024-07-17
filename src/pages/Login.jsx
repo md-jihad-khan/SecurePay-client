@@ -9,7 +9,7 @@ const Login = () => {
     identifier: "",
     pin: "",
   });
-  const [loading, setLoading] = useState(false);
+  const [spinner, setSpinner] = useState(false);
 
   const { identifier, pin } = formData;
 
@@ -20,7 +20,7 @@ const Login = () => {
   // Function to handle form submission
   const onSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setSpinner(true);
     try {
       const res = await axios.post("http://localhost:5000/api/auth/login", {
         identifier,
@@ -34,15 +34,16 @@ const Login = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-      setLoading(false);
+      setSpinner(false);
       // Store token in localStorage or session
       localStorage.setItem("token", res.data.token);
+
       navigate("/");
 
       // Redirect to dashboard or handle as needed
       // Example: history.push("/dashboard");
     } catch (err) {
-      setLoading(false);
+      setSpinner(false);
       Swal.fire({
         position: "top-end",
         icon: "error",
@@ -92,7 +93,7 @@ const Login = () => {
               />
             </div>
             <button type="submit" className="w-full btn bg-sky-500 font-bold">
-              {loading ? (
+              {spinner ? (
                 <span className="loading text-center loading-spinner loading-lg "></span>
               ) : (
                 "Sign in"

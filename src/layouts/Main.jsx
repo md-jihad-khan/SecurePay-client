@@ -24,7 +24,7 @@ const Main = () => {
 
       {/* Outlet --> Dynamic content */}
       <div className="flex-1 font-poppins md:ml-64">
-        <div className="p-5">
+        <div className="md:p-5">
           <Outlet />
         </div>
       </div>

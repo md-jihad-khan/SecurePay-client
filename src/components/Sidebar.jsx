@@ -11,7 +11,7 @@ import { GiTakeMyMoney } from "react-icons/gi";
 import { useAuth } from "../providers/AuthProvider";
 
 const Sidebar = () => {
-  const { userInfo } = useAuth();
+  const { userInfo, setUserInfo } = useAuth();
   const [isActive, setActive] = useState(false);
   const navigate = useNavigate();
 
@@ -23,6 +23,7 @@ const Sidebar = () => {
   const logout = () => {
     localStorage.clear("token");
     navigate("/login");
+    setUserInfo(null);
   };
 
   return (
@@ -117,11 +118,7 @@ const Sidebar = () => {
               )}
               {userInfo?.role === "admin" && (
                 <>
-                  <MenuItem
-                    label="Manage Users"
-                    address="/dashboard/manageMembers"
-                    icon={FaUsers}
-                  />
+                  <MenuItem label="Manage Users" address="/" icon={FaUsers} />
                   <MenuItem
                     label="All Transaction History"
                     address="/dashboard/paymentHistory"
