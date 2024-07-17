@@ -22,8 +22,14 @@ const Profile = () => {
           </p>
           <p className="text-lg font-medium">
             Balance: {userInfo.balance}
-            <span className="text-sky-500">$</span>
+            <span className="text-sky-500">TK</span>
           </p>
+          {userInfo?.status == "pending" && (
+            <p className="text-lg text-center font-medium">
+              Your account is in pending wait for admin approved and get{" "}
+              <span className="text-sky-500">Bonus money</span>
+            </p>
+          )}
         </div>
       </div>
     </div>
